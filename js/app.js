@@ -1,275 +1,118 @@
-/*=========================================================
+/*==========================================================
  MAGISTERIO PRO
  app.js
- Versión 1.0
+ Versión 2.0
 
- Autor:
+ Inicializador del Sistema
+
  Lic. Carlos Eduardo Sepúlveda Toro
-=========================================================*/
+==========================================================*/
 
 "use strict";
 
-/*=========================================================
+/*==========================================================
  VARIABLES
-=========================================================*/
+==========================================================*/
 
-const home = document.getElementById("home");
-const dashboard = document.getElementById("dashboard");
+const botonesMenu = document.querySelectorAll(".menu button");
 
-const btnComenzar = document.getElementById("btnComenzar");
+/*==========================================================
+ INICIO
+==========================================================*/
 
-const modules = document.querySelectorAll(".module");
+document.addEventListener("DOMContentLoaded", iniciarApp);
 
-/*=========================================================
- INICIALIZACIÓN
-=========================================================*/
+/*==========================================================
+ APP
+==========================================================*/
 
-window.addEventListener("load", iniciarSistema);
-
-/*=========================================================
- SISTEMA
-=========================================================*/
-
-function iniciarSistema(){
+function iniciarApp(){
 
     console.clear();
 
-    console.log("====================================");
+    console.log("=====================================");
     console.log(" MAGISTERIO PRO");
-    console.log(" Sistema iniciado correctamente");
-    console.log("====================================");
+    console.log(" Sistema iniciado");
+    console.log("=====================================");
 
-    registrarEventos();
+    configurarMenu();
+
+    render("inicio");
 
 }
 
-/*=========================================================
- EVENTOS
-=========================================================*/
+/*==========================================================
+ MENÚ
+==========================================================*/
 
-function registrarEventos(){
+function configurarMenu(){
 
-    if(btnComenzar){
+    botonesMenu.forEach(boton=>{
 
-        btnComenzar.addEventListener(
-            "click",
-            mostrarDashboard
-        );
+        boton.addEventListener("click",()=>{
 
-    }
+            seleccionarBoton(boton);
 
-    modules.forEach(modulo=>{
+            const vista = boton.dataset.view;
 
-        modulo.addEventListener(
+            render(vista);
 
-            "click",
-
-            abrirModulo
-
-        );
+        });
 
     });
 
-}
-
-/*=========================================================
- MOSTRAR DASHBOARD
-=========================================================*/
-
-function mostrarDashboard(){
-
-    home.classList.remove("active");
-
-    dashboard.classList.add("active");
+    seleccionarBoton(botonesMenu[0]);
 
 }
 
-/*=========================================================
- ABRIR MÓDULOS
-=========================================================*/
+/*==========================================================
+ BOTÓN ACTIVO
+==========================================================*/
 
-function abrirModulo(e){
+function seleccionarBoton(botonActivo){
 
-    const nombre=e.target.innerText.trim();
+    botonesMenu.forEach(boton=>{
 
-    switch(nombre){
+        boton.classList.remove("active");
 
-        case "[>] MARCO NORMATIVO":
+    });
 
-            abrirMarcoNormativo();
-
-        break;
-
-        case "[>] GESTIÓN ADMINISTRATIVA":
-
-            mensaje("Gestión Administrativa");
-
-        break;
-
-        case "[>] GESTIÓN ACADÉMICA":
-
-            mensaje("Gestión Académica");
-
-        break;
-
-        case "[>] CONVIVENCIA ESCOLAR":
-
-            mensaje("Convivencia Escolar");
-
-        break;
-
-        case "[>] EDUCACIÓN INCLUSIVA":
-
-            mensaje("Educación Inclusiva");
-
-        break;
-
-        case "[>] COMPETENCIAS DOCENTES":
-
-            mensaje("Competencias Docentes");
-
-        break;
-
-        case "[>] LECTURA CRÍTICA":
-
-            mensaje("Lectura Crítica");
-
-        break;
-
-        case "[>] RAZONAMIENTO CUANTITATIVO":
-
-            mensaje("Razonamiento Cuantitativo");
-
-        break;
-
-        case "[>] CONOCIMIENTO ESPECÍFICO":
-
-            mensaje("Conocimiento Específico");
-
-        break;
-
-        case "[>] SIMULACROS CNSC":
-
-            mensaje("Simulacros");
-
-        break;
-
-    }
+    botonActivo.classList.add("active");
 
 }
 
-/*=========================================================
- MENSAJES
-=========================================================*/
-
-function mensaje(texto){
-
-    alert(
-
-        "Módulo seleccionado:\\n\\n"+
-
-        texto+
-
-        "\\n\\nDisponible próximamente."
-
-    );
-
-}
-
-/*=========================================================
- MARCO NORMATIVO
-=========================================================*/
-
-function abrirMarcoNormativo(){
-
-    alert(
-
-`MARCO NORMATIVO
-
-Documentos recomendados
-
-• Constitución Política
-
-• Ley 115 de 1994
-
-• Decreto 1075 de 2015
-
-• Ley 715 de 2001
-
-• Decreto Ley 1278 de 2002
-
-• Decreto 1290 de 2009
-
-• Ley 1620 de 2013
-
-• Decreto 1421 de 2017
-
-• Ley 1098 de 2006
-
-• Manual de Funciones
-
-En la siguiente versión este módulo
-abrirá una biblioteca con enlaces
-directos a los documentos oficiales.`
-
-    );
-
-}
-
-/*=========================================================
+/*==========================================================
  UTILIDADES
-=========================================================*/
+==========================================================*/
 
 function abrirURL(url){
 
-    window.open(
-
-        url,
-
-        "_blank"
-
-    );
+    window.open(url,"_blank");
 
 }
 
-/*=========================================================
- FUTURAS VERSIONES
-=========================================================*/
+function version(){
 
-/*
+    return biblioteca.app.version;
 
-Versión 1.1
+}
 
-- Biblioteca Inteligente
-- Buscador
-- Enlaces Oficiales
+function nombreSistema(){
 
-Versión 1.2
+    return biblioteca.app.nombre;
 
-- Resúmenes
+}
 
-Versión 1.3
+/*==========================================================
+ MENSAJE
+==========================================================*/
 
-- Conceptos Clave
+console.log(
 
-Versión 1.4
+    nombreSistema(),
 
-- Casos CNSC
+    "v",
 
-Versión 2.0
+    version()
 
-- Banco de Preguntas
-
-Versión 2.5
-
-- Simulador CNSC
-
-Versión 3.0
-
-- Estadísticas
-
-- Progreso
-
-- LocalStorage
-
-*/
+);
